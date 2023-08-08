@@ -100,7 +100,7 @@ void moveMotorDiagonal(enum Directions dir){
   }
   digitalWrite(MOTORX.pulse,LOW);
   digitalWrite(MOTORY.pulse,LOW);
-  delayMicroseconds(2000);   
+  delayMicroseconds(20000);   
 }
 
 

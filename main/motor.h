@@ -10,6 +10,7 @@ const int dirPinY = 6;
 const int enaPinY = 9;
 
 const int FULLSTEP = 400;
+const int DELAY = 500;
 
 struct Motor{
   int pulse;
