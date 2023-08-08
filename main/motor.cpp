@@ -53,14 +53,6 @@ void moveMotor(enum Directions dir){
   delayMicroseconds(2000);   
 }
 
-
-//enum DirectionDiagonal{
-//  UP_RIGHT,  //  MOTORY.dir = high && MOTORX.dir = low
-//  UP_LEFT, //  MOTORY.dir = high && MOTORX.dir = high
-//  DOWN_RIGHT, //  MOTORY.dir = low && MOTORX.dir = low
-//  DOWN_LEFT,  //  MOTORY.dir = low && MOTORX.dir = high
-//}
-
 void moveMotorDiagonal(enum Directions dir){
   int stepsX;
   int stepsY;
@@ -71,8 +63,6 @@ void moveMotorDiagonal(enum Directions dir){
     case UP_RIGHT:
     digitalWrite(MOTORY.dir,HIGH);
     digitalWrite(MOTORX.dir,LOW);
-//    stepsX = FULLSTEP;
-//    stepsY = FULLSTEP;
     break;
     case UP_LEFT:
     digitalWrite(MOTORY.dir,HIGH);
