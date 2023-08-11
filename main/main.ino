@@ -10,6 +10,6 @@ void setup() {
 
 void loop() {
   server_loop();
-  performMove(Directions::UP_RIGHT);
-  performMove(Directions::DOWN_LEFT);
+//  performMove(Directions::UP_RIGHT);
+//  performMove(Directions::DOWN_LEFT);
 }
