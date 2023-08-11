@@ -1,7 +1,7 @@
  #ifndef SERVER_H
  #define SERVER_H
- #include <Arduino.h>
- #include "motor.h"
+
+//  #include <Arduino.h>
  #include <SPI.h>
  #include <Ethernet.h>
 

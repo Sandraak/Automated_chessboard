@@ -18,13 +18,13 @@ void initMotor(enum MotorAxis axis){
   digitalWrite(motor.ena,LOW);
 }
 
-void moveMotor(enum Directions dir){
+void moveMotor(enum Directions dir, int steps){
   Motor motor;
-  int steps;
+  // int steps;
   switch (dir){
     case UP:
     motor = MOTORY;
-    digitalWrite(motor.dir,HIGH);
+    digitalWrite(motor.dir,LOW);
 //    steps = FULLSTEP;
     break;
     case RIGHT:
@@ -33,7 +33,7 @@ void moveMotor(enum Directions dir){
     break;
     case DOWN:
     motor = MOTORY;
-    digitalWrite(motor.dir,LOW);
+    digitalWrite(motor.dir,HIGH);
     break;
     case LEFT:
     motor = MOTORX;
@@ -45,35 +45,33 @@ void moveMotor(enum Directions dir){
   steps = FULLSTEP;  
   for (int i = 0; i < steps; ++i){
     digitalWrite(motor.pulse,HIGH); 
-    delayMicroseconds(500); 
+    delayMicroseconds(DELAY); 
     digitalWrite(motor.pulse,LOW); 
-    delayMicroseconds(500);   
+    delayMicroseconds(DELAY);   
   }
   digitalWrite(motor.pulse,LOW);
-  delayMicroseconds(2000);   
+  delayMicroseconds(4* DELAY);   
 }
 
-void moveMotorDiagonal(enum Directions dir){
-  int stepsX;
-  int stepsY;
-  int steps = FULLSTEP;
+void moveMotorDiagonal(enum Directions dir, int steps){
+  steps = FULLSTEP;
   Motor motors[] = {MOTORX, MOTORY};
 
     switch (dir){
     case UP_RIGHT:
-    digitalWrite(MOTORY.dir,HIGH);
+    digitalWrite(MOTORY.dir,LOW);
     digitalWrite(MOTORX.dir,LOW);
     break;
     case UP_LEFT:
-    digitalWrite(MOTORY.dir,HIGH);
+    digitalWrite(MOTORY.dir,LOW);
     digitalWrite(MOTORX.dir,HIGH);
     break;
     case DOWN_RIGHT:
-    digitalWrite(MOTORY.dir,LOW);
+    digitalWrite(MOTORY.dir,HIGH);
     digitalWrite(MOTORX.dir,LOW);
     break;
     case DOWN_LEFT:
-    digitalWrite(MOTORY.dir,LOW);
+    digitalWrite(MOTORY.dir,HIGH);
     digitalWrite(MOTORX.dir,HIGH);
     default:
     steps = FULLSTEP;
@@ -95,10 +93,11 @@ void moveMotorDiagonal(enum Directions dir){
 
 
 void performMove(enum Directions direction){
+  int steps = FULLSTEP;
   if (direction == UP || direction == RIGHT || direction == DOWN || direction == LEFT){
-    moveMotor(direction);
+    moveMotor(direction, steps);
   }
   else {
-    moveMotorDiagonal(direction);
+    moveMotorDiagonal(direction, steps);
   }
 }
