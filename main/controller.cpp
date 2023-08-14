@@ -1,8 +1,68 @@
 #include "controller.h"
 
-// bool positionReached = false;
-// Pos PreviousPosition = { 0, 0 };
-// Pos NewPosition = { 0, 0 };
+void controllerSetup(Pos oldPos, Pos newPos) {
+  oldPos = { 0, 0 };
+  newPos = { 0, 0 };
+  Magnet magnet{ newPos, false };
+}
+
+void performMove(Pos oldPos, Pos newPos) {
+  Vector<Directions> directions = SetDirections(oldPos,newPos);
+  for(int i =0; i < directions.size(); i++){
+  int steps = calculateNrOfSteps(directions[i]);
+  moveMotors(directions[i], steps);
+  }
+  //send done
+}
+
+Vector<Directions> SetDirections(Pos oldPos, Pos newPos) {
+  int dx = abs(oldPos.x - newPos.x);
+  int dy = abs(oldPos.y - newPos.y);
+  int max = max(dx, dy);
+  Vector<Directions> directions;
+  for (int i = 0; i < max; ++i) {
+    Directions direction = calculateDirection(oldPos, newPos);
+    oldPos = shiftPos(direction, oldPos);
+    directions.push_back(direction);
+  }
+  return directions;
+}
+
+Pos shiftPos(Directions direction, Pos oldPos) {
+  switch (direction) {
+    case UP:
+      oldPos.y + 1;
+      break;
+    case RIGHT:
+      oldPos.x + 1;
+      break;
+    case DOWN:
+      oldPos.y - 1;
+      break;
+    case LEFT:
+      oldPos.x - 1;
+      break;
+    case UP_RIGHT:
+      oldPos.y + 1;
+      oldPos.x + 1;
+      break;
+    case UP_LEFT:
+      oldPos.y + 1;
+      oldPos.x - 1;
+      break;
+    case DOWN_RIGHT:
+      oldPos.y - 1;
+      oldPos.x + 1;
+      break;
+    case DOWN_LEFT:
+      oldPos.y - 1;
+      oldPos.x - 1;
+      break;
+    default:
+      break;
+  }
+  return oldPos;
+}
 
 int calculateNrOfSteps(Directions direction) {
   int steps;
@@ -12,11 +72,6 @@ int calculateNrOfSteps(Directions direction) {
     steps = (DIAGONAL_DISTANCE / FULL_STEP_DIAGONAL) * FULLSTEP;
   }
   return steps;
-}
-
-void setStart(Pos previousPosition, Pos NewPosition) {
-  Pos PreviousPosition = { 0, 0 };
-  Pos NewPosition = { 0, 0 };
 }
 
 Directions calculateDirection(Pos previousPosition, Pos newPosition) {

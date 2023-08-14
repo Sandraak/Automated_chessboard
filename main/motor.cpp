@@ -18,7 +18,7 @@ void initMotor(enum MotorAxis axis){
   digitalWrite(motor.ena,LOW);
 }
 
-void moveMotor(enum Directions dir, int steps){
+void moveMotorStraight(enum Directions dir, int steps){
   Motor motor;
   // int steps;
   switch (dir){
@@ -42,7 +42,7 @@ void moveMotor(enum Directions dir, int steps){
     steps = FULLSTEP;
     break;
   }
-  steps = FULLSTEP;  
+  // steps = FULLSTEP;  
   for (int i = 0; i < steps; ++i){
     digitalWrite(motor.pulse,HIGH); 
     delayMicroseconds(DELAY); 
@@ -54,7 +54,7 @@ void moveMotor(enum Directions dir, int steps){
 }
 
 void moveMotorDiagonal(enum Directions dir, int steps){
-  steps = FULLSTEP;
+  // steps = FULLSTEP;
   Motor motors[] = {MOTORX, MOTORY};
 
     switch (dir){
@@ -74,30 +74,31 @@ void moveMotorDiagonal(enum Directions dir, int steps){
     digitalWrite(MOTORY.dir,HIGH);
     digitalWrite(MOTORX.dir,HIGH);
     default:
-    steps = FULLSTEP;
+    // steps = FULLSTEP;
     break;
   }
 
   for (int i = 0; i < steps; ++i){
       digitalWrite(MOTORX.pulse,HIGH);
       digitalWrite(MOTORY.pulse,HIGH);  
-      delayMicroseconds(500); 
+      delayMicroseconds(DELAY); 
       digitalWrite(MOTORX.pulse,LOW);
       digitalWrite(MOTORY.pulse,LOW); 
-      delayMicroseconds(500); 
+      delayMicroseconds(DELAY); 
   }
   digitalWrite(MOTORX.pulse,LOW);
   digitalWrite(MOTORY.pulse,LOW);
-  delayMicroseconds(20000);   
+  delayMicroseconds(4*DELAY);   
 }
 
 
-void performMove(enum Directions direction){
-  int steps = FULLSTEP;
+void moveMotors(enum Directions direction, int steps){
+  // steps = FULLSTEP;
   if (direction == UP || direction == RIGHT || direction == DOWN || direction == LEFT){
-    moveMotor(direction, steps);
+    moveMotorStraight(direction, steps);
   }
   else {
     moveMotorDiagonal(direction, steps);
   }
+  //update location
 }

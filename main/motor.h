@@ -3,7 +3,7 @@
 #include <Arduino.h>
 
 const int FULLSTEP = 800;
-const int DELAY = 1000;
+const int DELAY = 500;
 
 const int pulsePinX = 3;
 const int dirPinX = 6;
@@ -40,9 +40,9 @@ const Motor MOTORY = { pulsePinY, dirPinY, enaPinY };
 
 
 void initMotor(enum MotorAxis axis);
-void moveMotor(enum Directions dir, int steps);
+void moveMotorStraight(enum Directions dir, int steps);
 void moveMotorDiagonal(enum Directions dir, int steps);
-void performMove(enum Directions direction);
+void moveMotors(enum Directions direction,int steps);
 
 
 #endif /* MOTOR_H */
