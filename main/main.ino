@@ -10,10 +10,14 @@ void setup() {
   initMotor(MotorAxis::X);
   initMotor(MotorAxis::Y);
   // Serial.begin(9600);
-  Pos oldPos = { 0, 0 };
-  Pos newPos = { -2, 0 };
+  Pos oldPos = { -2, 0 };
+  Pos newPos = { 8, 0 };
+
   performMove(oldPos, newPos);
 
+  newPos = { -2, 0 };
+  oldPos = { 8, 0 };
+    performMove(oldPos, newPos);
   // Directions direction = calculateDirection(oldPos, newPos);
     // moveMotors(UP_RIGHT, 300);
   Serial.println("done");

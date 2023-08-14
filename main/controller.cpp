@@ -11,20 +11,14 @@ void performMove(Pos oldPos, Pos newPos) {
   int max = nrOfMoves(oldPos, newPos);
   Directions directions[max];
   setDirections(directions, max, oldPos, newPos);
-
-  //   Directions directions[max] = { Directions::
-  //   LEFT,
-  // };
-  // Serial.print("directions size: ");
-  // Serial.println(directions.size());
   for (int i = 0; i < max; i++) {
     int steps = calculateNrOfSteps(directions[i]);
-    Serial.print("directions: ");
-    Serial.println(directions[i]);
-    Serial.print("steps: ");
-    Serial.println(steps);
-
-    // int steps = 500;
+    // Serial.print("directions: ");
+    // Serial.println(directions[i]);
+    // Serial.print("steps: ");
+    // Serial.println(steps);
+    Serial.print("i: ");
+    Serial.println(i);
     moveMotors(directions[i], steps);
   }
 }
@@ -85,12 +79,35 @@ Pos shiftPos(Directions direction, Pos oldPos) {
 
 int calculateNrOfSteps(Directions direction) {
   int steps;
-  if (direction == UP || direction == RIGHT || direction == DOWN || direction == LEFT) {
-    Serial.println("calc number of steps straight");
-    steps = int((STRAIGHT_DISTANCE / FULL_STEP_STRAIGHT) * FULLSTEP);
-  } else {
-    Serial.println("calc number of steps diagonal");
-    steps = int((DIAGONAL_DISTANCE / FULL_STEP_DIAGONAL) * FULLSTEP);
+  // if (direction == UP || direction == RIGHT || direction == DOWN || direction == LEFT) {
+  //   Serial.println("calc number of steps straight");
+  //   steps = int((STRAIGHT_DISTANCE / FULL_STEP_STRAIGHT) * FULLSTEP);
+  // } else {
+  //   Serial.println("calc number of steps diagonal");
+  //   steps = int((DIAGONAL_DISTANCE / FULL_STEP_DIAGONAL) * FULLSTEP);
+  // }
+  // return steps;
+    switch (direction) {
+    case UP:
+      break;
+    case RIGHT:
+    steps = int((STRAIGHT_DISTANCE / FULL_STEP_STRAIGHT_RIGHT) * FULLSTEP);
+      break;
+    case DOWN:
+      break;
+    case LEFT:
+      steps = int((STRAIGHT_DISTANCE / FULL_STEP_STRAIGHT_RIGHT) * FULLSTEP);
+      break;
+    case UP_RIGHT:
+      break;
+    case UP_LEFT:
+      break;
+    case DOWN_RIGHT:
+      break;
+    case DOWN_LEFT:
+      break;
+    default:
+      break;
   }
   return steps;
 }

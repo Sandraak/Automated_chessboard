@@ -14,10 +14,13 @@ struct Magnet {
   bool on;
 };
 
+//Size of the squares
 const float STRAIGHT_DISTANCE = 300.0;  // mm
 const float DIAGONAL_DISTANCE = sqrt(2 * STRAIGHT_DISTANCE);
 
-const float FULL_STEP_STRAIGHT = 340.0;  // mm
+//The distance that the magnet travels in one full step
+const float FULL_STEP_STRAIGHT_RIGHT = 310.0;  // mm
+const float FULL_STEP_STRAIGHT_LEFT = 315.0;  // mm
 const float FULL_STEP_DIAGONAL = 470.0;  // mm
 
 void controllerSetup(Pos oldPos, Pos newPos);
