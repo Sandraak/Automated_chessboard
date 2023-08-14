@@ -2,7 +2,6 @@
 #define CONTROLLER_H
 
 #include <math.h>
-#include <Vector.h>
 #include "motor.h"
 
 struct Pos {
@@ -15,15 +14,16 @@ struct Magnet {
   bool on;
 };
 
-const int STRAIGHT_DISTANCE = 300;  // mm
-const int DIAGONAL_DISTANCE = short(sqrt(2 * STRAIGHT_DISTANCE));
+const float STRAIGHT_DISTANCE = 300.0;  // mm
+const float DIAGONAL_DISTANCE = sqrt(2 * STRAIGHT_DISTANCE);
 
-const int FULL_STEP_STRAIGHT = 340;  // mm
-const int FULL_STEP_DIAGONAL = 470;  // mm
+const float FULL_STEP_STRAIGHT = 340.0;  // mm
+const float FULL_STEP_DIAGONAL = 470.0;  // mm
 
-void controllerSetup(Pos oldPos,Pos newPos);
-void performMove(Directions direction, int steps);
-Vector<Directions>  SetDirections(Pos oldPos,Pos newPos);
+void controllerSetup(Pos oldPos, Pos newPos);
+void performMove(Pos oldPos, Pos newPos);
+int nrOfMoves(Pos oldPos, Pos newPos);
+void setDirections(Directions* directions, int max, Pos oldPos, Pos newPos);
 Pos shiftPos(Directions direction, Pos oldPos);
 int calculateNrOfSteps(Directions direction);
 Directions calculateDirection(Pos oldPos, Pos newPos);

@@ -38,7 +38,6 @@ enum Directions {
 const Motor MOTORX = { pulsePinX, dirPinX, enaPinX };
 const Motor MOTORY = { pulsePinY, dirPinY, enaPinY };
 
-
 void initMotor(enum MotorAxis axis);
 void moveMotorStraight(enum Directions dir, int steps);
 void moveMotorDiagonal(enum Directions dir, int steps);

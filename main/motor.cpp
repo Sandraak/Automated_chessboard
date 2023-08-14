@@ -94,6 +94,7 @@ void moveMotorDiagonal(enum Directions dir, int steps){
 
 void moveMotors(enum Directions direction, int steps){
   // steps = FULLSTEP;
+  Serial.println("move motor ");
   if (direction == UP || direction == RIGHT || direction == DOWN || direction == LEFT){
     moveMotorStraight(direction, steps);
   }

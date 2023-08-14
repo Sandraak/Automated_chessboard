@@ -1,3 +1,4 @@
+#include "HardwareSerial.h"
 #include "controller.h"
 
 void controllerSetup(Pos oldPos, Pos newPos) {
@@ -7,56 +8,74 @@ void controllerSetup(Pos oldPos, Pos newPos) {
 }
 
 void performMove(Pos oldPos, Pos newPos) {
-  Vector<Directions> directions = SetDirections(oldPos,newPos);
-  for(int i =0; i < directions.size(); i++){
-  int steps = calculateNrOfSteps(directions[i]);
-  moveMotors(directions[i], steps);
+  int max = nrOfMoves(oldPos, newPos);
+  Directions directions[max];
+  setDirections(directions, max, oldPos, newPos);
+
+  //   Directions directions[max] = { Directions::
+  //   LEFT,
+  // };
+  // Serial.print("directions size: ");
+  // Serial.println(directions.size());
+  for (int i = 0; i < max; i++) {
+    int steps = calculateNrOfSteps(directions[i]);
+    Serial.print("directions: ");
+    Serial.println(directions[i]);
+    Serial.print("steps: ");
+    Serial.println(steps);
+
+    // int steps = 500;
+    moveMotors(directions[i], steps);
   }
-  //send done
 }
 
-Vector<Directions> SetDirections(Pos oldPos, Pos newPos) {
+int nrOfMoves(Pos oldPos, Pos newPos) {
   int dx = abs(oldPos.x - newPos.x);
   int dy = abs(oldPos.y - newPos.y);
-  int max = max(dx, dy);
-  Vector<Directions> directions;
+  return max(dx, dy);
+}
+
+void setDirections(Directions directions[], int max, Pos oldPos, Pos newPos) {
+  // int max = nrOfMoves(oldPos, newPos);
+  // Directions directions[max];
   for (int i = 0; i < max; ++i) {
     Directions direction = calculateDirection(oldPos, newPos);
     oldPos = shiftPos(direction, oldPos);
-    directions.push_back(direction);
+    directions[i] = direction;
+    Serial.print("set direction, direction: ");
+    Serial.println(directions[i]);
   }
-  return directions;
 }
 
 Pos shiftPos(Directions direction, Pos oldPos) {
   switch (direction) {
     case UP:
-      oldPos.y + 1;
+      oldPos.y += 1;
       break;
     case RIGHT:
-      oldPos.x + 1;
+      oldPos.x += 1;
       break;
     case DOWN:
-      oldPos.y - 1;
+      oldPos.y -= 1;
       break;
     case LEFT:
-      oldPos.x - 1;
+      oldPos.x -= 1;
       break;
     case UP_RIGHT:
-      oldPos.y + 1;
-      oldPos.x + 1;
+      oldPos.y += 1;
+      oldPos.x += 1;
       break;
     case UP_LEFT:
-      oldPos.y + 1;
-      oldPos.x - 1;
+      oldPos.y += 1;
+      oldPos.x -= 1;
       break;
     case DOWN_RIGHT:
-      oldPos.y - 1;
-      oldPos.x + 1;
+      oldPos.y -= 1;
+      oldPos.x += 1;
       break;
     case DOWN_LEFT:
-      oldPos.y - 1;
-      oldPos.x - 1;
+      oldPos.y -= 1;
+      oldPos.x -= 1;
       break;
     default:
       break;
@@ -67,9 +86,11 @@ Pos shiftPos(Directions direction, Pos oldPos) {
 int calculateNrOfSteps(Directions direction) {
   int steps;
   if (direction == UP || direction == RIGHT || direction == DOWN || direction == LEFT) {
-    steps = (STRAIGHT_DISTANCE / FULL_STEP_STRAIGHT) * FULLSTEP;
+    Serial.println("calc number of steps straight");
+    steps = int((STRAIGHT_DISTANCE / FULL_STEP_STRAIGHT) * FULLSTEP);
   } else {
-    steps = (DIAGONAL_DISTANCE / FULL_STEP_DIAGONAL) * FULLSTEP;
+    Serial.println("calc number of steps diagonal");
+    steps = int((DIAGONAL_DISTANCE / FULL_STEP_DIAGONAL) * FULLSTEP);
   }
   return steps;
 }
@@ -80,16 +101,16 @@ Directions calculateDirection(Pos previousPosition, Pos newPosition) {
   bool down = false;
   bool right = false;
   bool left = false;
-  if (previousPosition.y + newPosition.y > previousPosition.y) {
+  if (previousPosition.y < newPosition.y) {
     up = true;
   }
-  if (previousPosition.y + newPosition.y < previousPosition.y) {
+  if (previousPosition.y > newPosition.y) {
     down = true;
   }
-  if (previousPosition.x + newPosition.x > previousPosition.y) {
+  if (previousPosition.x < newPosition.x) {
     right = true;
   }
-  if (previousPosition.x + newPosition.x < previousPosition.y) {
+  if (previousPosition.x > newPosition.x) {
     left = true;
   }
 

@@ -6,23 +6,29 @@ int Delay = 1000;
 
 void setup() {
   server_setup();
+  // controllerSetup(Pos oldPos, Pos newPos);
   initMotor(MotorAxis::X);
   initMotor(MotorAxis::Y);
   // Serial.begin(9600);
-  // Pos oldPos = { 0, 0 };
-  // Pos newPos = { 1, 1 };
+  Pos oldPos = { 0, 0 };
+  Pos newPos = { -2, 0 };
+  performMove(oldPos, newPos);
+
   // Directions direction = calculateDirection(oldPos, newPos);
-  // // Serial.println(oldPos);
+    // moveMotors(UP_RIGHT, 300);
+  Serial.println("done");
 }
 
 void loop() {
+  //   Pos oldPos = { 0, 0 };
+  // Pos newPos = { -2, 0 };
+  // performMove(oldPos, newPos);
   // Pos oldPos = { 0, 0 };
   // Pos newPos = { -1, -1 };
   // // calculateMovement(oldPos, newPos);
   // Directions direction = calculateDirection(oldPos, newPos);
   // server_loop();
-  // performMove(Directions::UP_RIGHT);
-  // performMove(Directions::DOWN_LEFT);
+  // moveMotors(UP_RIGHT, 300);
   // delay(Delay);
   // performMove(Directions::UP);
   // performMove(Directions::DOWN_LEFT);
