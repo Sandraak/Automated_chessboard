@@ -13,12 +13,12 @@ void performMove(Pos oldPos, Pos newPos) {
   setDirections(directions, max, oldPos, newPos);
   for (int i = 0; i < max; i++) {
     int steps = calculateNrOfSteps(directions[i]);
-    // Serial.print("directions: ");
-    // Serial.println(directions[i]);
-    // Serial.print("steps: ");
-    // Serial.println(steps);
-    Serial.print("i: ");
-    Serial.println(i);
+    //Serial.print("directions: ");
+    //Serial.println(directions[i]);
+    //Serial.print("steps: ");
+    //Serial.println(steps);
+    //Serial.print("i: ");
+    //Serial.println(i);
     moveMotors(directions[i], steps);
   }
 }
@@ -36,8 +36,8 @@ void setDirections(Directions directions[], int max, Pos oldPos, Pos newPos) {
     Directions direction = calculateDirection(oldPos, newPos);
     oldPos = shiftPos(direction, oldPos);
     directions[i] = direction;
-    Serial.print("set direction, direction: ");
-    Serial.println(directions[i]);
+    //Serial.print("set direction, direction: ");
+    //Serial.println(directions[i]);
   }
 }
 
@@ -96,7 +96,7 @@ int calculateNrOfSteps(Directions direction) {
     case DOWN:
       break;
     case LEFT:
-      steps = int((STRAIGHT_DISTANCE / FULL_STEP_STRAIGHT_RIGHT) * FULLSTEP);
+      steps = int((STRAIGHT_DISTANCE / FULL_STEP_STRAIGHT_LEFT) * FULLSTEP);
       break;
     case UP_RIGHT:
       break;
@@ -133,28 +133,28 @@ Directions calculateDirection(Pos previousPosition, Pos newPosition) {
 
   if (up && (!left && !right)) {
     direction = Directions::UP;
-    Serial.println("up");
+    //Serial.println("up");
   } else if (up && right) {
     direction = Directions::UP_RIGHT;
-    Serial.println("up right");
+    //Serial.println("up right");
   } else if (up && left) {
     direction = Directions::UP_LEFT;
-    Serial.println("up left");
+    //Serial.println("up left");
   } else if (down && (!left && !right)) {
     direction = Directions::DOWN;
-    Serial.println("down");
+    //Serial.println("down");
   } else if (down && right) {
     direction = Directions::DOWN_RIGHT;
-    Serial.println("down right");
+    //Serial.println("down right");
   } else if (down && left) {
     direction = Directions::DOWN_LEFT;
-    Serial.println("down left");
+    //Serial.println("down left");
   } else if (left && (!up && !down)) {
     direction = Directions::LEFT;
-    Serial.println("left");
+    //Serial.println("left");
   } else if (right && (!up && !down)) {
     direction = Directions::RIGHT;
-    Serial.println("right");
+    //Serial.println("right");
   }
   return direction;
 }

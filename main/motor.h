@@ -25,14 +25,14 @@ enum MotorAxis {
 };
 
 enum Directions {
-  UP,          // MOTORY.dir = low
-  RIGHT,       // MOTORX.dir = low
-  LEFT,        // MOTORX.dir = high
-  DOWN,        //  MOTORY.dir = high
-  UP_RIGHT,    //  MOTORY.dir = low && MOTORX.dir = low
-  UP_LEFT,     //  MOTORY.dir = low && MOTORX.dir = high
-  DOWN_RIGHT,  //  MOTORY.dir = high && MOTORX.dir = low
-  DOWN_LEFT,   //  MOTORY.dir = high && MOTORX.dir = high
+  UP = 0,          // MOTORY.dir = low
+  RIGHT = 1,       // MOTORX.dir = low
+  LEFT = 2,        // MOTORX.dir = high
+  DOWN = 3,        //  MOTORY.dir = high
+  UP_RIGHT = 4,    //  MOTORY.dir = low && MOTORX.dir = low
+  UP_LEFT = 5,     //  MOTORY.dir = low && MOTORX.dir = high
+  DOWN_RIGHT = 6,  //  MOTORY.dir = high && MOTORX.dir = low
+  DOWN_LEFT = 7,   //  MOTORY.dir = high && MOTORX.dir = high
 };
 
 const Motor MOTORX = { pulsePinX, dirPinX, enaPinX };
@@ -41,7 +41,7 @@ const Motor MOTORY = { pulsePinY, dirPinY, enaPinY };
 void initMotor(enum MotorAxis axis);
 void moveMotorStraight(enum Directions dir, int steps);
 void moveMotorDiagonal(enum Directions dir, int steps);
-void moveMotors(enum Directions direction,int steps);
+void moveMotors(enum Directions direction, int steps);
 
 
 #endif /* MOTOR_H */

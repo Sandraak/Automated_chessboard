@@ -1,105 +1,106 @@
+#include "HardwareSerial.h"
 #include "motor.h"
 
-void initMotor(enum MotorAxis axis){
+void initMotor(enum MotorAxis axis) {
   Motor motor;
-  switch (axis){
+  switch (axis) {
     case X:
-    motor = MOTORX;
-    break;
+      motor = MOTORX;
+      break;
     case Y:
-    motor = MOTORY;
-    break;
+      motor = MOTORY;
+      break;
     default:
-    break;
+      break;
   }
-  pinMode(motor.pulse,OUTPUT); 
-  pinMode(motor.dir,OUTPUT);
-  pinMode(motor.ena,OUTPUT);
-  digitalWrite(motor.ena,LOW);
+  pinMode(motor.pulse, OUTPUT);
+  pinMode(motor.dir, OUTPUT);
+  pinMode(motor.ena, OUTPUT);
+  digitalWrite(motor.ena, LOW);
 }
 
-void moveMotorStraight(enum Directions dir, int steps){
+void moveMotorStraight(enum Directions dir, int steps) {
   Motor motor;
-  // int steps;
-  switch (dir){
+  // Serial.print("steps in motor:");
+  // Serial.println(steps);
+  // Serial.print("direction: ");
+  // Serial.println(dir);
+  switch (dir) {
     case UP:
-    motor = MOTORY;
-    digitalWrite(motor.dir,LOW);
-//    steps = FULLSTEP;
-    break;
+      motor = MOTORY;
+      digitalWrite(motor.dir, LOW);
+      break;
     case RIGHT:
-    motor = MOTORX;
-    digitalWrite(motor.dir,LOW);
-    break;
+      motor = MOTORX;
+      digitalWrite(motor.dir, LOW);
+      break;
     case DOWN:
-    motor = MOTORY;
-    digitalWrite(motor.dir,HIGH);
-    break;
+      motor = MOTORY;
+      digitalWrite(motor.dir, HIGH);
+      break;
     case LEFT:
-    motor = MOTORX;
-    digitalWrite(motor.dir,HIGH);
+      motor = MOTORX;
+      digitalWrite(motor.dir, HIGH);
+      break;
     default:
-    steps = FULLSTEP;
-    break;
+      steps = 0;
+      break;
   }
-  // steps = FULLSTEP;  
-  for (int i = 0; i < steps; ++i){
-    digitalWrite(motor.pulse,HIGH); 
-    delayMicroseconds(DELAY); 
-    digitalWrite(motor.pulse,LOW); 
-    delayMicroseconds(DELAY);   
+  for (int i = 0; i < steps; ++i) {
+    digitalWrite(motor.pulse, HIGH);
+    delayMicroseconds(DELAY);
+    digitalWrite(motor.pulse, LOW);
+    delayMicroseconds(DELAY);
   }
-  digitalWrite(motor.pulse,LOW);
-  delayMicroseconds(4* DELAY);   
+  digitalWrite(motor.pulse, LOW);
+  // delayMicroseconds(DELAY);
 }
 
-void moveMotorDiagonal(enum Directions dir, int steps){
+void moveMotorDiagonal(enum Directions dir, int steps) {
   // steps = FULLSTEP;
-  Motor motors[] = {MOTORX, MOTORY};
-
-    switch (dir){
+  Motor motors[] = { MOTORX, MOTORY };
+  switch (dir) {
     case UP_RIGHT:
-    digitalWrite(MOTORY.dir,LOW);
-    digitalWrite(MOTORX.dir,LOW);
-    break;
+      digitalWrite(MOTORY.dir, LOW);
+      digitalWrite(MOTORX.dir, LOW);
+      break;
     case UP_LEFT:
-    digitalWrite(MOTORY.dir,LOW);
-    digitalWrite(MOTORX.dir,HIGH);
-    break;
+      digitalWrite(MOTORY.dir, LOW);
+      digitalWrite(MOTORX.dir, HIGH);
+      break;
     case DOWN_RIGHT:
-    digitalWrite(MOTORY.dir,HIGH);
-    digitalWrite(MOTORX.dir,LOW);
-    break;
+      digitalWrite(MOTORY.dir, HIGH);
+      digitalWrite(MOTORX.dir, LOW);
+      break;
     case DOWN_LEFT:
-    digitalWrite(MOTORY.dir,HIGH);
-    digitalWrite(MOTORX.dir,HIGH);
+      digitalWrite(MOTORY.dir, HIGH);
+      digitalWrite(MOTORX.dir, HIGH);
+      break;
     default:
-    // steps = FULLSTEP;
-    break;
+      // steps = FULLSTEP;
+      break;
   }
 
-  for (int i = 0; i < steps; ++i){
-      digitalWrite(MOTORX.pulse,HIGH);
-      digitalWrite(MOTORY.pulse,HIGH);  
-      delayMicroseconds(DELAY); 
-      digitalWrite(MOTORX.pulse,LOW);
-      digitalWrite(MOTORY.pulse,LOW); 
-      delayMicroseconds(DELAY); 
+  for (int i = 0; i < steps; ++i) {
+    digitalWrite(MOTORX.pulse, HIGH);
+    digitalWrite(MOTORY.pulse, HIGH);
+    delayMicroseconds(DELAY);
+    digitalWrite(MOTORX.pulse, LOW);
+    digitalWrite(MOTORY.pulse, LOW);
+    delayMicroseconds(DELAY);
   }
-  digitalWrite(MOTORX.pulse,LOW);
-  digitalWrite(MOTORY.pulse,LOW);
-  delayMicroseconds(4*DELAY);   
+  digitalWrite(MOTORX.pulse, LOW);
+  digitalWrite(MOTORY.pulse, LOW);
+  delayMicroseconds(DELAY);
 }
 
 
-void moveMotors(enum Directions direction, int steps){
+void moveMotors(enum Directions direction, int steps) {
   // steps = FULLSTEP;
-  Serial.println("move motor ");
-  if (direction == UP || direction == RIGHT || direction == DOWN || direction == LEFT){
+  // Serial.println("move motor ");
+  if (direction == UP || direction == RIGHT || direction == DOWN || direction == LEFT) {
     moveMotorStraight(direction, steps);
-  }
-  else {
+  } else {
     moveMotorDiagonal(direction, steps);
   }
-  //update location
 }
