@@ -3,6 +3,7 @@
 
 #include <math.h>
 #include "motor.h"
+#include "magnet.h"
 
 struct Pos {
   int x;
