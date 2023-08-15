@@ -1,11 +1,29 @@
 #include "HardwareSerial.h"
 #include "controller.h"
 
+bool magnetOn;
+bool posReached;
+Pos lastPos;
+
 void controllerSetup(Pos oldPos, Pos newPos) {
   oldPos = { 0, 0 };
   newPos = { 0, 0 };
   Magnet magnet{ newPos, false };
 }
+
+void handleServerInput(Pos from, Pos to, bool magnetStatus) {
+  // If the magnet is not yet at the position of the start of the move.
+  // Move the magnet to that position, now it is ready to perform the move.
+  // The magnet does not move a piece during this movement, so it can be off.
+  if (from != lastPos) {
+    toggle_magnet(false);
+    performMove(lastPos, from);
+  }
+  toggle_magnet(magnetStatus);
+  performMove(from, to);
+  lastPos = to;
+}
+
 
 void performMove(Pos oldPos, Pos newPos) {
   int max = nrOfMoves(oldPos, newPos);
@@ -13,12 +31,6 @@ void performMove(Pos oldPos, Pos newPos) {
   setDirections(directions, max, oldPos, newPos);
   for (int i = 0; i < max; i++) {
     int steps = setNrOfSteps(directions[i]);
-    //Serial.print("directions: ");
-    //Serial.println(directions[i]);
-    //Serial.print("steps: ");
-    //Serial.println(steps);
-    //Serial.print("i: ");
-    //Serial.println(i);
     moveMotors(directions[i], steps);
   }
 }
@@ -30,14 +42,10 @@ int nrOfMoves(Pos oldPos, Pos newPos) {
 }
 
 void setDirections(Directions directions[], int max, Pos oldPos, Pos newPos) {
-  // int max = nrOfMoves(oldPos, newPos);
-  // Directions directions[max];
   for (int i = 0; i < max; ++i) {
     Directions direction = calculateDirection(oldPos, newPos);
     oldPos = shiftPos(direction, oldPos);
     directions[i] = direction;
-    //Serial.print("set direction, direction: ");
-    //Serial.println(directions[i]);
   }
 }
 
