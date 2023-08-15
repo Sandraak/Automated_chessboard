@@ -12,7 +12,7 @@ void performMove(Pos oldPos, Pos newPos) {
   Directions directions[max];
   setDirections(directions, max, oldPos, newPos);
   for (int i = 0; i < max; i++) {
-    int steps = calculateNrOfSteps(directions[i]);
+    int steps = setNrOfSteps(directions[i]);
     //Serial.print("directions: ");
     //Serial.println(directions[i]);
     //Serial.print("steps: ");
@@ -77,39 +77,43 @@ Pos shiftPos(Directions direction, Pos oldPos) {
   return oldPos;
 }
 
-int calculateNrOfSteps(Directions direction) {
+int setNrOfSteps(Directions direction) {
   int steps;
-  // if (direction == UP || direction == RIGHT || direction == DOWN || direction == LEFT) {
-  //   Serial.println("calc number of steps straight");
-  //   steps = int((STRAIGHT_DISTANCE / FULL_STEP_STRAIGHT) * FULLSTEP);
-  // } else {
-  //   Serial.println("calc number of steps diagonal");
-  //   steps = int((DIAGONAL_DISTANCE / FULL_STEP_DIAGONAL) * FULLSTEP);
-  // }
-  // return steps;
-    switch (direction) {
+  switch (direction) {
     case UP:
+      steps = calculateNrOfSteps(STRAIGHT_DISTANCE, FULL_STEP_UP);
       break;
     case RIGHT:
-    steps = int((STRAIGHT_DISTANCE / FULL_STEP_STRAIGHT_RIGHT) * FULLSTEP);
+      steps = calculateNrOfSteps(STRAIGHT_DISTANCE, FULL_STEP_RIGHT);
       break;
     case DOWN:
+      steps = calculateNrOfSteps(STRAIGHT_DISTANCE, FULL_STEP_DOWN);
       break;
     case LEFT:
-      steps = int((STRAIGHT_DISTANCE / FULL_STEP_STRAIGHT_LEFT) * FULLSTEP);
+      steps = calculateNrOfSteps(STRAIGHT_DISTANCE, FULL_STEP_LEFT);
       break;
     case UP_RIGHT:
+      steps = calculateNrOfSteps(DIAGONAL_DISTANCE, FULL_STEP_UP_RIGHT);
       break;
     case UP_LEFT:
+      steps = calculateNrOfSteps(DIAGONAL_DISTANCE, FULL_STEP_UP_LEFT);
       break;
     case DOWN_RIGHT:
+      steps = calculateNrOfSteps(DIAGONAL_DISTANCE, FULL_STEP_DOWN_RIGHT);
       break;
     case DOWN_LEFT:
+      steps = calculateNrOfSteps(DIAGONAL_DISTANCE, FULL_STEP_DOWN_LEFT);
       break;
     default:
+      steps = 0;
+      Serial.println("setNrOfSTeps: No valid direction");
       break;
   }
   return steps;
+}
+
+int calculateNrOfSteps(float realDistance, float motorDistance) {
+  return int((realDistance / motorDistance) * FULLSTEP);
 }
 
 Directions calculateDirection(Pos previousPosition, Pos newPosition) {
