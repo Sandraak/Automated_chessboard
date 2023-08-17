@@ -4,6 +4,8 @@
 #include <math.h>
 #include "motor.h"
 #include "magnet.h"
+#include "server.h"
+
 
 struct Pos {
   int x;
@@ -16,11 +18,6 @@ struct Pos {
   inline bool operator!=(Pos a) {
     return (a.x != x || a.y != y);
   };
-};
-
-struct Magnet {
-  Pos lastPos;
-  bool on;
 };
 
 //Size of the squares
@@ -40,7 +37,7 @@ const float FULL_STEP_DOWN_LEFT = 310.0;   // mm
 
 const float FULL_STEP_DIAGONAL = 470.0;  // mm
 
-void controllerSetup(Pos oldPos, Pos newPos);
+void controllerSetup();
 void handleServerInput(Pos from, Pos to, bool magnetStatus);
 void performMove(Pos oldPos, Pos newPos);
 int nrOfMoves(Pos oldPos, Pos newPos);

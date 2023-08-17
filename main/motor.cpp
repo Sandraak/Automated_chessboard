@@ -1,6 +1,11 @@
 #include "HardwareSerial.h"
 #include "motor.h"
 
+void motorSetup() {
+  initMotor(MotorAxis::X);
+  initMotor(MotorAxis::Y);
+}
+
 void initMotor(enum MotorAxis axis) {
   Motor motor;
   switch (axis) {

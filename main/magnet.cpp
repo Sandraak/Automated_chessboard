@@ -1,13 +1,18 @@
 #include "magnet.h"
 
-void magnet_setup() {
-  pinMode(MAGNET_PIN, OUTPUT);
+
+//npn transistor 220 ohm
+
+void magnetSetup() {
+  pinMode(TRANSISTOR_PIN, OUTPUT);
+  // digitalWrite(TRANSISTOR_PIN, LOW);
 }
 
-void toggle_magnet(bool on) {
+void toggleMagnet(bool on) {
   if (on) {
-    digitalWrite(MAGNET_PIN, HIGH);
+    digitalWrite(TRANSISTOR_PIN, HIGH);
   } else {
-    digitalWrite(MAGNET_PIN, LOW);
+    digitalWrite(TRANSISTOR_PIN, LOW);
   }
 }
+

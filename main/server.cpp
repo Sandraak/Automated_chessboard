@@ -15,7 +15,7 @@
   --------------------------------------------------------------*/
 #include "server.h"
 
-void server_setup() {
+void serverSetup() {
   // Open serial communications and wait for port to open:
   Serial.begin(9600);
   while (!Serial) {
@@ -29,7 +29,7 @@ void server_setup() {
 }
 
 
-void server_loop() {
+void serverLoop() {
   Serial.println("hoi");
   // listen for incoming clients
   EthernetClient client = server.available();

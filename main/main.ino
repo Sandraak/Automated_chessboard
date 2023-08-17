@@ -1,22 +1,24 @@
-#include "motor.h"
-#include "server.h"
+// #include "motor.h"
+// #include "server.h"
+// #include "magnet.h"
 #include "controller.h"
 
-int Delay = 1000;
+// int Delay = 1000;
 
 void setup() {
-  server_setup();
-  // controllerSetup(Pos oldPos, Pos newPos);
-  initMotor(MotorAxis::X);
-  initMotor(MotorAxis::Y);
-  // Serial.begin(9600);
-  Pos oldPos = { 0, 0 };
-  Pos newPos = { 5, 0 };
-  performMove(oldPos, newPos);
-  oldPos = { 5, 0 };
-  newPos = { 0, 0 };
-  performMove(oldPos, newPos);
-  Serial.println("done");
+  controllerSetup();
+  // serverSetup();
+  // magnetSetup();
+  // initMotor(MotorAxis::X);
+  // initMotor(MotorAxis::Y);
+  // // Serial.begin(9600);
+  // Pos oldPos = { 0, 0 };
+  // Pos newPos = { 5, 0 };
+  // performMove(oldPos, newPos);
+  // oldPos = { 5, 0 };
+  // newPos = { 0, 0 };
+  // performMove(oldPos, newPos);
+  // Serial.println("done");
 }
 
 void loop() {

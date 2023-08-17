@@ -2,9 +2,9 @@
 #define MAGNET_H
 #include <Arduino.h>
 
-const int MAGNET_PIN = 1;
+const int TRANSISTOR_PIN =7;
 
-void magnet_setup();
-void toggle_magnet(bool on);
+void magnetSetup();
+void toggleMagnet(bool on);
 
 #endif /* MAGNET_H */

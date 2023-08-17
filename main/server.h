@@ -16,6 +16,6 @@ const IPAddress ip(192, 168, 1, 177);
 // (port 80 is default for HTTP):
 const EthernetServer server(80);
 
-void server_setup();
-void server_loop();
+void serverSetup();
+void serverLoop();
  #endif /* MOTOR_H */

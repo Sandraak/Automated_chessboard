@@ -5,10 +5,11 @@ bool magnetOn;
 bool posReached;
 Pos lastPos;
 
-void controllerSetup(Pos oldPos, Pos newPos) {
-  oldPos = { 0, 0 };
-  newPos = { 0, 0 };
-  Magnet magnet{ newPos, false };
+void controllerSetup() {
+  lastPos = {0,0};
+    serverSetup();
+    motorSetup();
+    magnetSetup();
 }
 
 void handleServerInput(Pos from, Pos to, bool magnetStatus) {
@@ -16,10 +17,10 @@ void handleServerInput(Pos from, Pos to, bool magnetStatus) {
   // Move the magnet to that position, now it is ready to perform the move.
   // The magnet does not move a piece during this movement, so it can be off.
   if (from != lastPos) {
-    toggle_magnet(false);
+    toggleMagnet(false);
     performMove(lastPos, from);
   }
-  toggle_magnet(magnetStatus);
+  toggleMagnet(magnetStatus);
   performMove(from, to);
   lastPos = to;
 }
