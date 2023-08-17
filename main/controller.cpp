@@ -6,10 +6,9 @@ bool posReached;
 Pos lastPos;
 
 void controllerSetup() {
-  lastPos = {0,0};
-    serverSetup();
-    motorSetup();
-    magnetSetup();
+  lastPos = { 0, 0 };
+  // motorSetup();
+  // magnetSetup();
 }
 
 void handleServerInput(Pos from, Pos to, bool magnetStatus) {

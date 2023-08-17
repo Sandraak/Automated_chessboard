@@ -4,8 +4,6 @@
 #include <math.h>
 #include "motor.h"
 #include "magnet.h"
-#include "server.h"
-
 
 struct Pos {
   int x;
