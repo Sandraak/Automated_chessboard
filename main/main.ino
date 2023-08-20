@@ -7,7 +7,7 @@
 
 void setup() {
   serverSetup();
-  controllerSetup();
+  // controllerSetup();
   // magnetSetup();
   // initMotor(MotorAxis::X);
   // initMotor(MotorAxis::Y);
