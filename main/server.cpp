@@ -14,9 +14,10 @@ void serverLoop() {
   httpClient = server.available();
   if (httpClient) {
     // Serial.println(F("new client"));
-    handleServerInput(handleRequest(httpClient));
+    ServerInput message = handleRequest(httpClient);
     delay(1);
     httpClient.stop();  // close connection
+    handleServerInput(message);
     // Serial.println("client disconnected");
   }
 }
@@ -41,8 +42,11 @@ ServerInput handleRequest(EthernetClient client) {
   length = read_until_slash(client, buf);
   if (buf[0] == 'p') {
     message.poll = true;
-    // delay(1);
-    // //poll
+
+    client.println("HTTP/1.1 200 OK");
+    client.println("Content-Type: text/plain");
+    client.println("Connection: close");
+    client.println(getPosreached());
     return message;
   } else {
     // int x_from = castChartoInt(buf, length);
@@ -61,6 +65,7 @@ ServerInput handleRequest(EthernetClient client) {
     bool magnet = buf[0] - 48;
     message.magnetStatus = magnet;
   }
+  // httpClient.stop();
   return message;
 }
 

@@ -1,7 +1,6 @@
 #include "HardwareSerial.h"
 #include "controller.h"
 
-bool magnetOn;
 bool posReached;
 Pos lastPos;
 
@@ -9,11 +8,17 @@ void controllerSetup() {
   motorSetup();
   magnetSetup();
   lastPos = { 0, 0 };
+
+}
+
+bool getPosreached(){
+  return posReached;
 }
 
 void handleServerInput(ServerInput serverInput) {
   if (serverInput.poll) {
   } else {
+    posReached = false;
     // If the magnet is not yet at the position of the start of the move.
     // Move the magnet to that position, now it is ready to perform the move.
     // The magnet does not move a piece during this movement, so it can be off.
@@ -25,6 +30,7 @@ void handleServerInput(ServerInput serverInput) {
     performMove(serverInput.from, serverInput.to);
     lastPos = serverInput.to;
     toggleMagnet(false);
+    posReached = true;
   }
 }
 

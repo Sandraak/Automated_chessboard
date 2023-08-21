@@ -53,4 +53,6 @@ int setNrOfSteps(Directions direction);
 int calculateNrOfSteps(float realDistance, float motorDistance);
 Directions calculateDirection(Pos oldPos, Pos newPos);
 
+bool getPosreached();
+
 #endif /* CONTROLLER_H */
