@@ -1,5 +1,5 @@
 #include "server.h"
-// #include "motor.h"
+#include "motor.h"
 // #include "magnet.h"
 // #include "controller.h"
 
@@ -8,16 +8,16 @@
 void setup() {
   serverSetup();
   // controllerSetup();
-  // controllerSetup();
   // magnetSetup();
   // initMotor(MotorAxis::X);
   // initMotor(MotorAxis::Y);
-  // // Serial.begin(9600);
-  // Pos oldPos = { 0, 0 };
-  // Pos newPos = { 5, 0 };
+  // Serial.begin(9600);
+  // Pos oldPos = { 7, 0 };
+  // Pos newPos = { 0, 7 };
   // performMove(oldPos, newPos);
-  // oldPos = { 5, 0 };
-  // newPos = { 0, 0 };
+  // delay(3000);
+  // oldPos = { 0, 7 };
+  // newPos = { 7, 0 };
   // performMove(oldPos, newPos);
   // Serial.println("done");
 }

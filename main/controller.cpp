@@ -18,22 +18,27 @@ void handleServerInput(ServerInput serverInput) {
     // Move the magnet to that position, now it is ready to perform the move.
     // The magnet does not move a piece during this movement, so it can be off.
     if (serverInput.from != lastPos) {
+      Serial.println("handle server lastpos is not from");
       toggleMagnet(false);
       performMove(lastPos, serverInput.from);
     }
+    Serial.println("Nu naar de echte locatie");
     toggleMagnet(serverInput.magnetStatus);
     performMove(serverInput.from, serverInput.to);
     lastPos = serverInput.to;
+    toggleMagnet(false);
   }
 }
 
 
 void performMove(Pos oldPos, Pos newPos) {
   int max = nrOfMoves(oldPos, newPos);
+  Serial.println(max);
   Directions directions[max];
   setDirections(directions, max, oldPos, newPos);
   for (int i = 0; i < max; i++) {
     int steps = setNrOfSteps(directions[i]);
+    Serial.println(steps);
     moveMotors(directions[i], steps);
   }
 }

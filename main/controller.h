@@ -28,20 +28,20 @@ struct ServerInput{
 
 //Size of the squares
 const float STRAIGHT_DISTANCE = 300.0;  // mm
-const float DIAGONAL_DISTANCE = sqrt(2 * STRAIGHT_DISTANCE);
+const float DIAGONAL_DISTANCE = sqrt(2 * pow(STRAIGHT_DISTANCE,2)); //pythagoras
 
 //The distance that the magnet travels in one full step in a certain direction
 const float FULL_STEP_RIGHT = 310.0;  // mm
 const float FULL_STEP_LEFT = 315.0;   // mm
-//todo
-const float FULL_STEP_UP = 310.0;          // mm
-const float FULL_STEP_DOWN = 315.0;        // mm
-const float FULL_STEP_UP_RIGHT = 310.0;    // mm
-const float FULL_STEP_UP_LEFT = 310.0;     // mm
-const float FULL_STEP_DOWN_RIGHT = 310.0;  // mm
-const float FULL_STEP_DOWN_LEFT = 310.0;   // mm
+const float FULL_STEP_UP = 310.0;     // mm
+const float FULL_STEP_DOWN = 315.0; // mm
+//        
+const float FULL_STEP_UP_RIGHT = 438.5;    // mm
+const float FULL_STEP_DOWN_LEFT = 438.5;   // mm
+const float FULL_STEP_UP_LEFT = 438.5;     // mm
+const float FULL_STEP_DOWN_RIGHT = 438.5;  // mm
 
-const float FULL_STEP_DIAGONAL = 470.0;  // mm
+// const float FULL_STEP_DIAGONAL = 470.0;  // mm
 
 void controllerSetup();
 
