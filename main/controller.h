@@ -33,18 +33,15 @@ const float DIAGONAL_DISTANCE = sqrt(2 * pow(STRAIGHT_DISTANCE,2)); //pythagoras
 const float FULL_STEP_RIGHT = 310.0;  // mm
 const float FULL_STEP_LEFT = 315.0;   // mm
 const float FULL_STEP_UP = 310.0;     // mm
-const float FULL_STEP_DOWN = 315.0; // mm
-//        
+const float FULL_STEP_DOWN = 315.0; // mm   
 const float FULL_STEP_UP_RIGHT = 438.5;    // mm
 const float FULL_STEP_DOWN_LEFT = 438.5;   // mm
 const float FULL_STEP_UP_LEFT = 438.5;     // mm
 const float FULL_STEP_DOWN_RIGHT = 438.5;  // mm
 
-// const float FULL_STEP_DIAGONAL = 470.0;  // mm
-
 void controllerSetup();
-
 void handleServerInput(ServerInput serverInput);
+
 void performMove(Pos oldPos, Pos newPos);
 int nrOfMoves(Pos oldPos, Pos newPos);
 void setDirections(Directions* directions, int max, Pos oldPos, Pos newPos);

@@ -8,7 +8,7 @@ void controllerSetup() {
   motorSetup();
   magnetSetup();
   lastPos = { 0, 0 };
-
+  posReached = true;
 }
 
 bool getPosreached(){

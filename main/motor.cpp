@@ -26,10 +26,6 @@ void initMotor(enum MotorAxis axis) {
 
 void moveMotorStraight(enum Directions dir, int steps) {
   Motor motor;
-  // Serial.print("steps in motor:");
-  // Serial.println(steps);
-  // Serial.print("direction: ");
-  // Serial.println(dir);
   switch (dir) {
     case UP:
       motor = MOTORY;
@@ -82,7 +78,7 @@ void moveMotorDiagonal(enum Directions dir, int steps) {
       digitalWrite(MOTORX.dir, HIGH);
       break;
     default:
-      // steps = FULLSTEP;
+      steps = 0;
       break;
   }
 

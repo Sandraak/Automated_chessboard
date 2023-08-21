@@ -11,7 +11,7 @@ const EthernetClient httpClient;
 
 void serverSetup();
 void serverLoop();
-int read_until_slash(EthernetClient client, char* buf);
 ServerInput handleRequest(EthernetClient client);
+int read_until_slash(EthernetClient client, char* buf);
 int castChartoInt(char* buf, char length);
- #endif /* MOTOR_H */
+ #endif /* SERVER_H */
