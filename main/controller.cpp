@@ -6,22 +6,25 @@ bool posReached;
 Pos lastPos;
 
 void controllerSetup() {
+  motorSetup();
+  magnetSetup();
   lastPos = { 0, 0 };
-  // motorSetup();
-  // magnetSetup();
 }
 
-void handleServerInput(Pos from, Pos to, bool magnetStatus) {
-  // If the magnet is not yet at the position of the start of the move.
-  // Move the magnet to that position, now it is ready to perform the move.
-  // The magnet does not move a piece during this movement, so it can be off.
-  if (from != lastPos) {
-    toggleMagnet(false);
-    performMove(lastPos, from);
+void handleServerInput(ServerInput serverInput) {
+  if (serverInput.poll) {
+  } else {
+    // If the magnet is not yet at the position of the start of the move.
+    // Move the magnet to that position, now it is ready to perform the move.
+    // The magnet does not move a piece during this movement, so it can be off.
+    if (serverInput.from != lastPos) {
+      toggleMagnet(false);
+      performMove(lastPos, serverInput.from);
+    }
+    toggleMagnet(serverInput.magnetStatus);
+    performMove(serverInput.from, serverInput.to);
+    lastPos = serverInput.to;
   }
-  toggleMagnet(magnetStatus);
-  performMove(from, to);
-  lastPos = to;
 }
 
 

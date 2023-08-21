@@ -2,38 +2,27 @@
 #include "server.h"
 
 void serverSetup() {
-  // Serial.begin(9600);
-  // Ethernet.begin(mac, ip);
-  // server.begin();
-  // Serial.print("server is at ");
-  // Serial.println(Ethernet.localIP());
   Serial.begin(9600);
   Ethernet.begin(mac, ip);
   server.begin();
   Serial.print("server is at ");
   Serial.println(Ethernet.localIP());
+  controllerSetup();
 }
 
 void serverLoop() {
   httpClient = server.available();
   if (httpClient) {
     Serial.println(F("new client"));
-    handleRequest(httpClient);
+    handleServerInput(handleRequest(httpClient));
     delay(1);
     httpClient.stop();  // close connection
     Serial.println("client disconnected");
   }
-  // // Serial.println("hoi");
-  // httpClient = server.available();
-  // Serial.println(F("new client"));
-  // // handleRequest(httpClient);
-  // // delay(10);
-  // httpClient.stop();  // close connection
-  // Serial.println("client disconnected");
 }
 
-int read_until_slash(EthernetClient client, int* buf) {
-  int index = 0;
+int read_until_slash(EthernetClient client, char* buf) {
+  char index = 0;
   int current = client.read();
   while (current != '/' && current != '\n' && current != '\r') {
     buf[index] = current;
@@ -43,58 +32,58 @@ int read_until_slash(EthernetClient client, int* buf) {
   return index;
 }
 
-void handleRequest(EthernetClient client) {
-  int buf[80];
+ServerInput handleRequest(EthernetClient client) {
+  ServerInput message{ false, 0, 0, 0 };
+  char buf[80];
   // Ignore part before first slash (GET /)
-  int length = read_until_slash(client, buf);
-  delay(1);
+  char length = read_until_slash(client, buf);
+  // delay(1);
   length = read_until_slash(client, buf);
-  if ((char)buf[0] == 'p') {
-    Serial.println("poll");
+  if (buf[0] == 'p') {
+    message.poll = true;
     // delay(1);
     // //poll
-    // client.println("HTTP/1.1 200 OK");
-    // client.println("Content-Type: text/html");
-    // client.println("Connection: close");  // the connection will be closed after completion of the response
-    // client.println("Refresh: 5");         // refresh the page automatically every 5 sec
-    // client.println();
-    // client.println("<!DOCTYPE HTML>");
-    // client.println("<html>");
-    return;
+    return message;
   } else {
-    // x coordinate
+    int x_from = castChartoInt(buf, length);
+    message.from.x = x_from;
     length = read_until_slash(client, buf);
-    int x;
-    if (length == 1) {
-      x = buf[0];
-    } else {
-      x = ((int)buf[0] * 10) + (int)buf[1];
-    }
-    // y coordinate
+    int y_from = castChartoInt(buf, length);
+    message.from.y = y_from;
     length = read_until_slash(client, buf);
-    int y;
-    if (length == 1) {
-      y = (int)buf[0];
-    } else {
-      y = ((int)buf[0] * 10) + (int)buf[1];
-    }
+    int x_to = castChartoInt(buf, length);
+    message.to.x = x_to;
+    length = read_until_slash(client, buf);
+    int y_to = castChartoInt(buf, length);
+    message.to.y = y_to;
     // magnet on/off
     length = read_until_slash(client, buf);
-    bool magnet = (bool)buf[0];
-    Serial.println(x);
-    Serial.println(y);
-    Serial.println(magnet);
+    bool magnet = buf[0] - 48;
+    message.magnetStatus = magnet;
+    // Serial.print("x from: ");
+    // Serial.println(x_from);
+    // Serial.print("y from: ");
+    // Serial.println(y_from);
+    // Serial.print("x to: ");
+    // Serial.println(x_to);
+    // Serial.print("y to: ");
+    // Serial.println(y_to);
+    // Serial.print("magnet: ");
+    // Serial.println(magnet);
   }
+  return message;
 }
 
-// // make httpClient methods available as ordinary functions
-// int clientAvailable() {
-//   return httpClient.connected() && httpClient.available();
-// }
-
-// char clientRead() {
-//   return httpClient.read();
-// }
-// char clientPeek() {
-//   return httpClient.peek();
-// }
+int castChartoInt(char* buf, char length) {
+  int result;
+  if (length == 1) {
+    result = buf[0] - 48;
+  } else {
+    if (buf[0] == '-') {
+      result = (buf[1] - 48) * -1;
+    } else {
+      result = ((buf[0] - 48) * 10) + (buf[1] - 48);
+    }
+  }
+  return result;
+}

@@ -1,12 +1,13 @@
-// #include "motor.h"
 #include "server.h"
+// #include "motor.h"
 // #include "magnet.h"
-#include "controller.h"
+// #include "controller.h"
 
 // int Delay = 1000;
 
 void setup() {
   serverSetup();
+  // controllerSetup();
   // controllerSetup();
   // magnetSetup();
   // initMotor(MotorAxis::X);
@@ -23,6 +24,7 @@ void setup() {
 
 void loop() {
   serverLoop();
+  // controllerLoop();
   //   Pos oldPos = { 0, 0 };
   // Pos newPos = { -2, 0 };
   // performMove(oldPos, newPos);
