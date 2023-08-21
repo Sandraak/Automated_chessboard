@@ -13,11 +13,11 @@ void serverSetup() {
 void serverLoop() {
   httpClient = server.available();
   if (httpClient) {
-    Serial.println(F("new client"));
+    // Serial.println(F("new client"));
     handleServerInput(handleRequest(httpClient));
     delay(1);
     httpClient.stop();  // close connection
-    Serial.println("client disconnected");
+    // Serial.println("client disconnected");
   }
 }
 
@@ -45,31 +45,21 @@ ServerInput handleRequest(EthernetClient client) {
     // //poll
     return message;
   } else {
-    int x_from = castChartoInt(buf, length);
-    message.from.x = x_from;
+    // int x_from = castChartoInt(buf, length);
+    message.from.x = castChartoInt(buf, length);
     length = read_until_slash(client, buf);
-    int y_from = castChartoInt(buf, length);
-    message.from.y = y_from;
+    // int y_from = castChartoInt(buf, length);
+    message.from.y = castChartoInt(buf, length);
     length = read_until_slash(client, buf);
-    int x_to = castChartoInt(buf, length);
-    message.to.x = x_to;
+    // int x_to = castChartoInt(buf, length);
+    message.to.x = castChartoInt(buf, length);
     length = read_until_slash(client, buf);
-    int y_to = castChartoInt(buf, length);
-    message.to.y = y_to;
+    // int y_to = castChartoInt(buf, length);
+    message.to.y = castChartoInt(buf, length);
     // magnet on/off
     length = read_until_slash(client, buf);
     bool magnet = buf[0] - 48;
     message.magnetStatus = magnet;
-    // Serial.print("x from: ");
-    // Serial.println(x_from);
-    // Serial.print("y from: ");
-    // Serial.println(y_from);
-    // Serial.print("x to: ");
-    // Serial.println(x_to);
-    // Serial.print("y to: ");
-    // Serial.println(y_to);
-    // Serial.print("magnet: ");
-    // Serial.println(magnet);
   }
   return message;
 }
