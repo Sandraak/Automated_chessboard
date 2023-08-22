@@ -20,7 +20,6 @@ struct Pos {
 
 struct ServerInput{
   bool poll;
-  Pos from;
   Pos to;
   bool magnetStatus;
 };

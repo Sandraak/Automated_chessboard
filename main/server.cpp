@@ -20,9 +20,8 @@ void serverLoop() {
   }
 }
 
-
 ServerInput handleRequest(EthernetClient client) {
-  ServerInput message{ false, 0, 0, 0 };
+  ServerInput message{ false, {0,0}, 0 };
   char buf[80];
   // Ignore part before first slash (GET /)
   char length = read_until_slash(client, buf);
@@ -36,10 +35,10 @@ ServerInput handleRequest(EthernetClient client) {
     client.println(getPosreached());
     return message;
   } else {
-    message.from.x = castChartoInt(buf, length);
-    length = read_until_slash(client, buf);
-    message.from.y = castChartoInt(buf, length);
-    length = read_until_slash(client, buf);
+    // message.from.x = castChartoInt(buf, length);
+    // length = read_until_slash(client, buf);
+    // message.from.y = castChartoInt(buf, length);
+    // length = read_until_slash(client, buf);
     message.to.x = castChartoInt(buf, length);
     length = read_until_slash(client, buf);
     message.to.y = castChartoInt(buf, length);

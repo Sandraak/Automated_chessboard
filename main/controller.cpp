@@ -11,7 +11,7 @@ void controllerSetup() {
   posReached = true;
 }
 
-bool getPosreached(){
+bool getPosreached() {
   return posReached;
 }
 
@@ -22,14 +22,21 @@ void handleServerInput(ServerInput serverInput) {
     // If the magnet is not yet at the position of the start of the move.
     // Move the magnet to that position, now it is ready to perform the move.
     // The magnet does not move a piece during this movement, so it can be off.
-    if (serverInput.from != lastPos) {
-      toggleMagnet(false);
-      performMove(lastPos, serverInput.from);
-    }
+    // if (serverInput.from != lastPos) {
+    //   toggleMagnet(false);
+    //   performMove(lastPos, serverInput.from);
+    // }
+    Serial.print("x: ");
+    Serial.println(serverInput.to.x);
+    Serial.print("y: ");
+    Serial.println(serverInput.to.y);
+    Serial.print(" magnet: ");
+    Serial.println(serverInput.magnetStatus);
+
+
     toggleMagnet(serverInput.magnetStatus);
-    performMove(serverInput.from, serverInput.to);
+    performMove(lastPos, serverInput.to);
     lastPos = serverInput.to;
-    toggleMagnet(false);
     posReached = true;
   }
 }
