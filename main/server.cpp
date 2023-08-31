@@ -25,7 +25,6 @@ ServerInput handleRequest(EthernetClient client) {
   char buf[80];
   // Ignore part before first slash (GET /)
   char length = read_until_slash(client, buf);
-  // delay(1);
   length = read_until_slash(client, buf);
   if (buf[0] == 'p') {
     message.poll = true;
@@ -35,14 +34,9 @@ ServerInput handleRequest(EthernetClient client) {
     client.println(getPosreached());
     return message;
   } else {
-    // message.from.x = castChartoInt(buf, length);
-    // length = read_until_slash(client, buf);
-    // message.from.y = castChartoInt(buf, length);
-    // length = read_until_slash(client, buf);
     message.to.x = castChartoInt(buf, length);
     length = read_until_slash(client, buf);
     message.to.y = castChartoInt(buf, length);
-    // magnet on/off
     length = read_until_slash(client, buf);
     bool magnet = buf[0] - 48;
     message.magnetStatus = magnet;

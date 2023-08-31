@@ -58,7 +58,6 @@ void moveMotorStraight(enum Directions dir, int steps) {
 }
 
 void moveMotorDiagonal(enum Directions dir, int steps) {
-  // steps = FULLSTEP;
   Motor motors[] = { MOTORX, MOTORY };
   switch (dir) {
     case UP_RIGHT:

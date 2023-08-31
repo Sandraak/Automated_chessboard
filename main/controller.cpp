@@ -1,4 +1,4 @@
-#include "HardwareSerial.h"
+// #include "HardwareSerial.h"
 #include "controller.h"
 
 bool posReached;
@@ -15,25 +15,14 @@ bool getPosreached() {
   return posReached;
 }
 
+Pos getLastPos(){
+  return lastPos;
+}
+
 void handleServerInput(ServerInput serverInput) {
   if (serverInput.poll) {
   } else {
     posReached = false;
-    // If the magnet is not yet at the position of the start of the move.
-    // Move the magnet to that position, now it is ready to perform the move.
-    // The magnet does not move a piece during this movement, so it can be off.
-    // if (serverInput.from != lastPos) {
-    //   toggleMagnet(false);
-    //   performMove(lastPos, serverInput.from);
-    // }
-    Serial.print("x: ");
-    Serial.println(serverInput.to.x);
-    Serial.print("y: ");
-    Serial.println(serverInput.to.y);
-    Serial.print(" magnet: ");
-    Serial.println(serverInput.magnetStatus);
-
-
     toggleMagnet(serverInput.magnetStatus);
     performMove(lastPos, serverInput.to);
     lastPos = serverInput.to;
@@ -131,7 +120,6 @@ int setNrOfSteps(Directions direction) {
       break;
     default:
       steps = 0;
-      Serial.println("setNrOfSTeps: No valid direction");
       break;
   }
   return steps;
@@ -162,28 +150,20 @@ Directions calculateDirection(Pos previousPosition, Pos newPosition) {
 
   if (up && (!left && !right)) {
     direction = Directions::UP;
-    //Serial.println("up");
   } else if (up && right) {
     direction = Directions::UP_RIGHT;
-    //Serial.println("up right");
   } else if (up && left) {
     direction = Directions::UP_LEFT;
-    //Serial.println("up left");
   } else if (down && (!left && !right)) {
     direction = Directions::DOWN;
-    //Serial.println("down");
   } else if (down && right) {
     direction = Directions::DOWN_RIGHT;
-    //Serial.println("down right");
   } else if (down && left) {
     direction = Directions::DOWN_LEFT;
-    //Serial.println("down left");
   } else if (left && (!up && !down)) {
     direction = Directions::LEFT;
-    //Serial.println("left");
   } else if (right && (!up && !down)) {
     direction = Directions::RIGHT;
-    //Serial.println("right");
   }
   return direction;
 }
